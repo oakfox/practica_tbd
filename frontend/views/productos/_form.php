@@ -12,13 +12,21 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'productoid')->textInput() ?>
+    <div class="row">
+        <div class="col-lg-2"><?= $form->field($model, 'productoid')->textInput() ?></div>
+        <div class="col-lg-4">
+            <?= $form->field($model, 'categoriaid')->dropDownList(\app\models\Categorias::getListanombrecat(),['prompt'=>'Selecciona...']) ?>
+        </div>
+        <div class="col-lg-6">
+            <?= $form->field($model, 'descripcion')->textarea(['rows' => 4]) ?>
+
+        </div>
+    </div>
+
 
     <?= $form->field($model, 'proveedorid')->textInput() ?>
 
-    <?= $form->field($model, 'categoriaid')->dropDownList(\app\models\Categorias::getListanombrecat(),['prompt'=>'Selecciona...']) ?>
 
-    <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'preciounit')->textInput() ?>
 
