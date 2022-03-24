@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "proveedores".
@@ -62,5 +63,12 @@ class Proveedores extends \yii\db\ActiveRecord
     public function getProductos()
     {
         return $this->hasMany(Productos::className(), ['proveedorid' => 'proveedorid']);
+    }
+
+    public static function getLproveedor(){
+        $objeto=Proveedores::findBySql("select proveedorid, concat(trim(nombreprov),' [',trim(contacto),']') nombre
+from proveedores
+order by nombreprov asc")->asArray()->all();
+        return ArrayHelper::map($objeto,'proveedorid','nombre');
     }
 }

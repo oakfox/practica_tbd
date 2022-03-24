@@ -23,17 +23,27 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-6">
+            <?= $form->field($model, 'proveedorid')->dropDownList(\app\models\Proveedores::getLproveedor(),['prompt'=>'Selecciona...']) ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'preciounit')->textInput() ?>
 
-    <?= $form->field($model, 'proveedorid')->textInput() ?>
+        </div>
+        <div class="col-lg-3">
+
+            <?= $form->field($model, 'existencia')->textInput() ?>
+
+        </div>
+    </div>
 
 
 
-    <?= $form->field($model, 'preciounit')->textInput() ?>
 
-    <?= $form->field($model, 'existencia')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

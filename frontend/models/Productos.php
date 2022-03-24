@@ -51,14 +51,14 @@ class Productos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'productoid' => 'Productoid',
-            'proveedorid' => 'Proveedorid',
+            'productoid' => 'ID',
+            'proveedorid' => 'Proveedor',
             'nproveedorid' => 'Proveedor',
-            'categoriaid' => 'Categoriaid',
+            'categoriaid' => 'Categoria',
             'ncategoriaid' => 'Categoria',
-            'descripcion' => 'Descripcion',
-            'preciounit' => 'Preciounit',
-            'existencia' => 'Existencia',
+            'descripcion' => 'Descripción',
+            'preciounit' => 'Precio unitario',
+            'existencia' => 'Existencias',
         ];
     }
 
@@ -104,4 +104,6 @@ class Productos extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Proveedores::className(), ['proveedorid' => 'proveedorid']);
     }
+
+
 }
