@@ -44,6 +44,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Entrar', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => 'Clientes', 'url' => ['/clientes/index']];
+        $menuItems[] = ['label' => 'Productos', 'url' => ['/productos/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
