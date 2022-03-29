@@ -2,17 +2,16 @@
 
 namespace frontend\controllers;
 
-use app\models\Clientes;
-use frontend\models\ClientresSearch;
+use app\models\Ordenes;
 use frontend\models\OrdenesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ClientesController implements the CRUD actions for Clientes model.
+ * OrdenesController implements the CRUD actions for Ordenes model.
  */
-class ClientesController extends Controller
+class OrdenesController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +32,13 @@ class ClientesController extends Controller
     }
 
     /**
-     * Lists all Clientes models.
+     * Lists all Ordenes models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ClientresSearch();
+        $searchModel = new OrdenesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,36 +48,30 @@ class ClientesController extends Controller
     }
 
     /**
-     * Displays a single Clientes model.
-     * @param int $clienteid ID del Cliente
+     * Displays a single Ordenes model.
+     * @param int $ordenid Ordenid
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($clienteid)
+    public function actionView($ordenid)
     {
-        $searchModel = new OrdenesSearch();
-        $searchModel->clienteid=$clienteid;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
         return $this->render('view', [
-            'model' => $this->findModel($clienteid),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model' => $this->findModel($ordenid),
         ]);
     }
 
     /**
-     * Creates a new Clientes model.
+     * Creates a new Ordenes model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Clientes();
+        $model = new Ordenes();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'clienteid' => $model->clienteid]);
+                return $this->redirect(['view', 'ordenid' => $model->ordenid]);
             }
         } else {
             $model->loadDefaultValues();
@@ -90,18 +83,18 @@ class ClientesController extends Controller
     }
 
     /**
-     * Updates an existing Clientes model.
+     * Updates an existing Ordenes model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $clienteid ID del Cliente
+     * @param int $ordenid Ordenid
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($clienteid)
+    public function actionUpdate($ordenid)
     {
-        $model = $this->findModel($clienteid);
+        $model = $this->findModel($ordenid);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'clienteid' => $model->clienteid]);
+            return $this->redirect(['view', 'ordenid' => $model->ordenid]);
         }
 
         return $this->render('update', [
@@ -110,29 +103,29 @@ class ClientesController extends Controller
     }
 
     /**
-     * Deletes an existing Clientes model.
+     * Deletes an existing Ordenes model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $clienteid ID del Cliente
+     * @param int $ordenid Ordenid
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($clienteid)
+    public function actionDelete($ordenid)
     {
-        $this->findModel($clienteid)->delete();
+        $this->findModel($ordenid)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Clientes model based on its primary key value.
+     * Finds the Ordenes model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $clienteid ID del Cliente
-     * @return Clientes the loaded model
+     * @param int $ordenid Ordenid
+     * @return Ordenes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($clienteid)
+    protected function findModel($ordenid)
     {
-        if (($model = Clientes::findOne(['clienteid' => $clienteid])) !== null) {
+        if (($model = Ordenes::findOne(['ordenid' => $ordenid])) !== null) {
             return $model;
         }
 
