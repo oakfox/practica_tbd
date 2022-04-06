@@ -12,11 +12,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ordenid')->textInput() ?>
-
     <?= $form->field($model, 'empleadoid')->textInput() ?>
 
-    <?= $form->field($model, 'clienteid')->textInput() ?>
+    <?= $form->field($model, 'clienteid')->dropDownList(\app\models\Ordenes::getClientes(),["prompt"=>"Selecciona..."]) ?>
 
     <?= $form->field($model, 'fechaorden')->textInput() ?>
 

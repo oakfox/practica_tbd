@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <p>
-        <?= Html::a('Crear orden', ['/ordenes/create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear orden', ['/ordenes/create','clienteid'=>$model->clienteid], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "ordenes".
@@ -33,7 +34,7 @@ class Ordenes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ordenid', 'empleadoid', 'clienteid', 'fechaorden'], 'required'],
+            [[ 'empleadoid', 'clienteid', 'fechaorden'], 'required'],
             [['ordenid', 'empleadoid', 'clienteid', 'descuento'], 'default', 'value' => null],
             [['ordenid', 'empleadoid', 'clienteid', 'descuento'], 'integer'],
             [['fechaorden'], 'safe'],
@@ -98,4 +99,11 @@ class Ordenes extends \yii\db\ActiveRecord
         $cli=Clientes::findOne(['clienteid'=>$this->clienteid]);
         return $cli?$cli->nombrecontacto:'--';
     }
+
+    public static function getClientes(){
+        $lista=Clientes::findBySql("select clienteid, concat(trim(nombrecia),'-',nombrecontacto) nombrecontacto from clientes")->asArray()->all();
+        return ArrayHelper::map($lista, 'clienteid', 'nombrecontacto');
+    }
+
+
 }
