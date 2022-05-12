@@ -73,6 +73,12 @@ class OrdenesController extends Controller
             $model->clienteid=$clienteid;
         }
 
+        $model->fechaorden=date("Y-m-d");
+
+        $uordenid=Ordenes::findBySql("select ordenid from ordenes order by ordenid desc limit 1")->asArray()->one();
+        $model->ordenid=$uordenid['ordenid'] + 1;
+
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'ordenid' => $model->ordenid]);

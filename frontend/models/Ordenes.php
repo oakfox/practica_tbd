@@ -35,7 +35,7 @@ class Ordenes extends \yii\db\ActiveRecord
     {
         return [
             [[ 'empleadoid', 'clienteid', 'fechaorden'], 'required'],
-            [['ordenid', 'empleadoid', 'clienteid', 'descuento'], 'default', 'value' => null],
+            [[ 'empleadoid', 'clienteid', 'descuento'], 'default', 'value' => null],
             [['ordenid', 'empleadoid', 'clienteid', 'descuento'], 'integer'],
             [['fechaorden'], 'safe'],
             [['ordenid'], 'unique'],
@@ -103,6 +103,11 @@ class Ordenes extends \yii\db\ActiveRecord
     public static function getClientes(){
         $lista=Clientes::findBySql("select clienteid, concat(trim(nombrecia),'-',nombrecontacto) nombrecontacto from clientes")->asArray()->all();
         return ArrayHelper::map($lista, 'clienteid', 'nombrecontacto');
+    }
+    public static function getEmpleados(){
+        $lista=Empleados::findBySql("select empleadoid,concat(trim(nombre),' ',apellido) as nombre from empleados order by nombre")->asArray()->all();
+        return ArrayHelper::map($lista, 'empleadoid', 'nombre');
+
     }
 
 
