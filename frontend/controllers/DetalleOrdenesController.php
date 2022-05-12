@@ -2,17 +2,16 @@
 
 namespace frontend\controllers;
 
-use app\models\Ordenes;
+use app\models\DetalleOrdenes;
 use frontend\models\DetalleOrdenesSearch;
-use frontend\models\OrdenesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OrdenesController implements the CRUD actions for Ordenes model.
+ * DetalleOrdenesController implements the CRUD actions for DetalleOrdenes model.
  */
-class OrdenesController extends Controller
+class DetalleOrdenesController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +32,13 @@ class OrdenesController extends Controller
     }
 
     /**
-     * Lists all Ordenes models.
+     * Lists all DetalleOrdenes models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new OrdenesSearch();
+        $searchModel = new DetalleOrdenesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,49 +48,34 @@ class OrdenesController extends Controller
     }
 
     /**
-     * Displays a single Ordenes model.
+     * Displays a single DetalleOrdenes model.
      * @param int $ordenid Ordenid
+     * @param int $detalleid Detalleid
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($ordenid)
+    public function actionView($ordenid, $detalleid)
     {
-        $modelo=$this->findModel($ordenid);
-
-        $searchModel = new DetalleOrdenesSearch();
-        $searchModel->ordenid=$modelo->ordenid;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-
         return $this->render('view', [
-            'model' => $modelo,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model' => $this->findModel($ordenid, $detalleid),
         ]);
     }
 
     /**
-     * Creates a new Ordenes model.
+     * Creates a new DetalleOrdenes model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate($clienteid=null)
+    public function actionCreate($ordenid=null)
     {
-
-        $model = new Ordenes();
-        if($clienteid!=null){
-            $model->clienteid=$clienteid;
+        $model = new DetalleOrdenes();
+        if($ordenid){
+            $model->ordenid=$ordenid;
         }
-
-        $model->fechaorden=date("Y-m-d");
-
-        $uordenid=Ordenes::findBySql("select ordenid from ordenes order by ordenid desc limit 1")->asArray()->one();
-        $model->ordenid=$uordenid['ordenid'] + 1;
-
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'ordenid' => $model->ordenid]);
+                return $this->redirect(['/ordenes/view', 'ordenid' => $model->ordenid,]);
             }
         } else {
             $model->loadDefaultValues();
@@ -103,18 +87,19 @@ class OrdenesController extends Controller
     }
 
     /**
-     * Updates an existing Ordenes model.
+     * Updates an existing DetalleOrdenes model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $ordenid Ordenid
+     * @param int $detalleid Detalleid
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($ordenid)
+    public function actionUpdate($ordenid, $detalleid)
     {
-        $model = $this->findModel($ordenid);
+        $model = $this->findModel($ordenid, $detalleid);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ordenid' => $model->ordenid]);
+            return $this->redirect(['view', 'ordenid' => $model->ordenid, 'detalleid' => $model->detalleid]);
         }
 
         return $this->render('update', [
@@ -123,29 +108,31 @@ class OrdenesController extends Controller
     }
 
     /**
-     * Deletes an existing Ordenes model.
+     * Deletes an existing DetalleOrdenes model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $ordenid Ordenid
+     * @param int $detalleid Detalleid
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($ordenid)
+    public function actionDelete($ordenid, $detalleid)
     {
-        $this->findModel($ordenid)->delete();
+        $this->findModel($ordenid, $detalleid)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Ordenes model based on its primary key value.
+     * Finds the DetalleOrdenes model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $ordenid Ordenid
-     * @return Ordenes the loaded model
+     * @param int $detalleid Detalleid
+     * @return DetalleOrdenes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($ordenid)
+    protected function findModel($ordenid, $detalleid)
     {
-        if (($model = Ordenes::findOne(['ordenid' => $ordenid])) !== null) {
+        if (($model = DetalleOrdenes::findOne(['ordenid' => $ordenid, 'detalleid' => $detalleid])) !== null) {
             return $model;
         }
 

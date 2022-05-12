@@ -49,6 +49,7 @@ class DetalleOrdenes extends \yii\db\ActiveRecord
             'ordenid' => 'Ordenid',
             'detalleid' => 'Detalleid',
             'productoid' => 'Productoid',
+            'nproductoid' => 'Producto',
             'cantidad' => 'Cantidad',
         ];
     }
@@ -71,5 +72,10 @@ class DetalleOrdenes extends \yii\db\ActiveRecord
     public function getProducto()
     {
         return $this->hasOne(Productos::className(), ['productoid' => 'productoid']);
+    }
+
+    function getNproductoid(){
+        $pro=Productos::findOne(['productoid'=>$this->productoid]);
+       return $pro?$pro->descripcion:'--';
     }
 }

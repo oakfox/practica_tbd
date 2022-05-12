@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Ordenes */
@@ -30,11 +33,37 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'ordenid',
-            'empleadoid',
-            'clienteid',
+            'nempleadoid',
+            'nclienteid',
             'fechaorden',
             'descuento',
         ],
     ]) ?>
 
 </div>
+
+
+<p>
+    <?= Html::a('Agregar Articulos', ['/detalle-ordenes/create','ordenid'=>$model->ordenid], ['class' => 'btn btn-success']) ?>
+</p>
+
+<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+<?= GridView::widget([
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+    'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
+
+        //'ordenid',
+        //'detalleid',
+        'nproductoid',
+        'cantidad',
+        [
+            'class' => ActionColumn::className(),
+            'urlCreator' => function ($action,  $model, $key, $index, $column) {
+                return Url::toRoute([$action, 'ordenid' => $model->ordenid, 'detalleid' => $model->detalleid]);
+            }
+        ],
+    ],
+]); ?>
